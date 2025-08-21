@@ -21,7 +21,7 @@ public class Storage {
     }
 
     public void markTaskAsUndone(String[] words) throws DabotException{
-        if (words.length < 2 || words[1].isEmpty()) {
+        if (words.length < 2 || words[1].isEmpty()) { //argument check
             throw new DabotException("Task number cannot be empty!");
         }
         int taskId = Integer.parseInt(words[1]) - 1;
@@ -35,7 +35,7 @@ public class Storage {
     }
 
     public void markTaskAsDone(String[] words) throws DabotException{
-        if (words.length < 2 || words[1].isEmpty()) {
+        if (words.length < 2 || words[1].isEmpty()) { //argument check
             throw new DabotException("Task number cannot be empty!");
         }
         int taskId = Integer.parseInt(words[1]) - 1;
@@ -49,7 +49,7 @@ public class Storage {
     }
 
     public void deleteTask(String[] words) throws DabotException {
-        if (words.length < 2 || words[1].isEmpty()) {
+        if (words.length < 2 || words[1].isEmpty()) { //argument check
             throw new DabotException("Task number cannot be empty!");
         }
         int taskId = Integer.parseInt(words[1]) - 1;

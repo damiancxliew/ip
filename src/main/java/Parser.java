@@ -4,7 +4,7 @@ public class Parser {
         String[] words = input.split(" ", 2);
         String taskType = words[0];
 
-        switch (taskType) {
+        switch (taskType) { // Switch between different task types
             case "todo":
                 if (words.length < 2 || words[1].isEmpty()) {
                     throw new DabotException("The description of a todo cannot be empty.");

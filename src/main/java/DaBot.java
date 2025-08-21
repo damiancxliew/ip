@@ -5,6 +5,7 @@ public class DaBot {
     private static final Storage storage = new Storage();
     private static final Ui ui = new Ui();
     public static void main(String[] args) throws DabotException {
+        //Welcome user
         ui.showWelcome();
         while (true) {
             try {
