@@ -1,6 +1,9 @@
 import java.util.Scanner;
 
 public class Ui {
+
+    private static final String LONGLINE = "---------------------------";
+
     private final Scanner scanner;
 
     public Ui() {
@@ -17,12 +20,19 @@ public class Ui {
     }
 
     public void showWelcome() {
-        System.out.println("Hello! I'm DaBot\n");
-        System.out.println("What can I do for you?\n");
+        System.out.println(LONGLINE);
+        System.out.println("Hello! I'm DaBot");
+        System.out.println("What can I do for you?");
+        System.out.println(LONGLINE);
     }
 
     public void showBye() {
         System.out.println("Bye. Hope to see you again soon!\n");
     }
+
+    public void printError(String message) {
+        System.out.println(message);
+    }
+
 
 }
