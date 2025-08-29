@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -24,6 +26,14 @@ public class DaBot {
                 } else if (description.startsWith("delete")) {
                     String[] words = description.split(" ");
                     storage.deleteTask(words);
+                } else if (description.startsWith("on")) {
+                    String[] words = description.split(" ");
+                    try {
+                        storage.printTasksOn(words);
+                    } catch (DateTimeParseException e) {
+                        ui.printError("Wrong date format! Should be YYYY-mm-dd !");
+                    }
+
                 } else {
                     Task task = Parser.parseTask(description);
                     storage.addTask(task);
