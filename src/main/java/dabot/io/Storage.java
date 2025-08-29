@@ -11,14 +11,38 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles saving and loading of {@link Task} objects to and from the disk.
+ * <p>
+ * The {@code Storage} class abstracts away file I/O details, ensuring that
+ * tasks can be persisted across program runs. Tasks are stored one per line
+ * in a plain text file and encoded/decoded using {@link Task#encodeString()}
+ * and {@link Task#decodeString(String)}.
+ * </p>
+ */
 public class Storage {
     private final String filePath;
 
+    /**
+     * Constructs a {@code Storage} object to manage a given file path.
+     *
+     * @param filePath the path to the file where tasks will be saved/loaded
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
-    /** Loads tasks from file. Returns an empty list if file is absent. */
+    /**
+     * Loads tasks from the storage file.
+     * <p>
+     * Each line of the file is decoded into a {@link Task}. Invalid lines
+     * are skipped with a warning. If the file does not exist, an empty list
+     * is returned.
+     * </p>
+     *
+     * @return a list of tasks loaded from file; empty if file is missing
+     * @throws DabotException if the file cannot be read due to I/O issues
+     */
     public List<Task> load() throws DabotException {
         List<Task> list = new ArrayList<>();
         File f = new File(filePath);
@@ -43,7 +67,16 @@ public class Storage {
         }
     }
 
-    /** Saves all tasks into file, one per line. */
+    /**
+     * Saves a list of tasks into the storage file.
+     * <p>
+     * Each task is written on a new line using its encoded string form.
+     * Creates the file and parent directories if they do not exist.
+     * </p>
+     *
+     * @param tasks the list of tasks to save
+     * @throws DabotException if the tasks cannot be saved due to I/O issues
+     */
     public void save(List<Task> tasks) throws DabotException {
         File f = new File(filePath);
         try {

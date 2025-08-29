@@ -5,11 +5,22 @@ import dabot.io.Ui;
 import dabot.task.Task;
 import dabot.task.TaskList;
 
+/**
+ * The main entry point for the DaBot chatbot application.
+ * DaBot manages a task list that can contain ToDo, Deadline, and Event tasks.
+ * Users interact with DaBot via text commands (typed into standard input),
+ * and DaBot responds by updating the task list and saving changes to disk.
+ */
 public class DaBot {
     private final Storage storage;
     private final TaskList tasks;
     private final Ui ui;
 
+    /**
+     * Constructs a new {@code DaBot} instance.
+     *
+     * @param filePath the file path to load and save tasks (e.g., "data/dabot.txt")
+     */
     public DaBot(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -23,6 +34,12 @@ public class DaBot {
         tasks = loaded;
     }
 
+    /**
+     * Runs the main loop of DaBot.
+     * Continuously reads user input, parses commands, executes them,
+     * and provides feedback through the {@link Ui}. This method
+     * terminates when the user enters the {@code bye} command.
+     */
     public void run() {
         ui.showWelcome();
         while (true) {
@@ -71,8 +88,13 @@ public class DaBot {
         }
     }
 
+    /**
+     * Application entry point. Creates a {@code DaBot} instance
+     * and runs it with the default storage location.
+     *
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         new DaBot("data/dabot.txt").run();
     }
 }
-
