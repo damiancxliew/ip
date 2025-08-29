@@ -9,11 +9,11 @@ public class Deadline extends Task{
     protected LocalDate byDate;
 
 
-    public Deadline(String description, String by) {
+    public Deadline(String description, String byRaw) {
         super(description);
-        this.byRaw = by;
+        this.byRaw = byRaw;
         try {
-            this.byDate = LocalDate.parse(by); //if can change to date
+            this.byDate = LocalDate.parse(byRaw); //if can change to date
         } catch (DateTimeParseException e) {
             this.byDate = null;
         }
