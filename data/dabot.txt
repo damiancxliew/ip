@@ -1,2 +1,4 @@
 D | 0 | submit report | Sunday
 E | 0 | project meeting | 2pm | 4pm
+D | 0 | Submit CS2105 Assignment | 2025-09-03
+E | 0 | project meeting | 30th Aug 4pm | 5pm

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 public class Storage {
     public static ArrayList<Task> taskList;
@@ -106,4 +107,26 @@ public class Storage {
             System.out.println(e.getMessage());
         }
     }
+
+    public void printTasksOn(String[] words) throws DabotException{
+        if (words.length < 2) {
+            throw new DabotException("Date (YYYY-mm-dd) cannot be empty.");
+        }
+        LocalDate date = LocalDate.parse(words[1]);
+        System.out.println("Here are the tasks on " + date.toString());
+        for (Task task : taskList) {
+            if (task instanceof Deadline) {
+                if (((Deadline) task).byDate != null && ((Deadline) task).byDate.equals(date)) {
+                    System.out.println(task);
+                }
+            } else if (task instanceof Event) {
+                if (((Event) task).startTime != null && ((Event) task).endTime != null) {
+                    if (((Event) task).startTime.equals(date) || ((Event) task).endTime.equals(date)) {
+                        System.out.println(task);
+                    }
+                }
+            }
+        }
+    }
+
 }

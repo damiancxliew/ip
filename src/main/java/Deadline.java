@@ -1,18 +1,31 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Deadline extends Task{
-    protected LocalDate by;
+    protected String byRaw;
+    protected LocalDate byDate;
+
 
     public Deadline(String description, String by) {
         super(description);
-        this.by = LocalDate.parse(by);
+        this.byRaw = by;
+        try {
+            this.byDate = LocalDate.parse(by); //if can change to date
+        } catch (DateTimeParseException e) {
+            this.byDate = null;
+        }
+
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: "
-                + by.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ")";
+        if (byDate != null) {
+            return "[D]" + super.toString() + " (by: "
+                    + byDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ")";
+        } else {
+            return "[D]" + super.toString() + "(by: " + byRaw + ")";
+        }
     }
 
     @Override
@@ -26,6 +39,6 @@ public class Deadline extends Task{
                 getType(),
                 isDone ? 1 : 0,
                 description,
-                this.by.toString());
+                this.byRaw);
     }
 }
