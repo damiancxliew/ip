@@ -31,6 +31,12 @@ application {
     mainClass.set("dabot.main.DaBot")
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'dabot.main.DaBot'
+    }
+}
+
 shadowJar {
     archiveBaseName = "dabot"
     archiveClassifier = null
