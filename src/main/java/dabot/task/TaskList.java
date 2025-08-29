@@ -43,8 +43,8 @@ public class TaskList {
         tasks.get(index).markAsUndone();
     }
 
-    public List<Task> tasksOn(LocalDate date) {
-        List<Task> output = new ArrayList<>();
+    public ArrayList<Task> tasksOn(LocalDate date) {
+        ArrayList<Task> output = new ArrayList<>();
         for (Task task : tasks) {
             if (task instanceof Deadline) {
                 Deadline deadline = (Deadline) task;
@@ -61,4 +61,16 @@ public class TaskList {
         }
         return output;
     }
+
+    public ArrayList<Task> find(String keyword) {
+        ArrayList<Task> output = new java.util.ArrayList<>();
+        String keywordLowerCase = keyword.toLowerCase();
+        for (Task t : tasks) {
+            if (t.toString().toLowerCase().contains(keywordLowerCase)) {
+                output.add(t);
+            }
+        }
+        return output;
+    }
+
 }
