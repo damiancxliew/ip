@@ -1,3 +1,7 @@
+package dabot.task;
+
+import dabot.main.DabotException;
+
 public abstract class Task {
     protected String description;
     protected boolean isDone;

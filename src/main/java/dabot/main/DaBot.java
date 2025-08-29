@@ -1,7 +1,8 @@
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Scanner;
+package dabot.main;
+import dabot.io.Storage;
+import dabot.io.Ui;
+import dabot.task.Task;
+import dabot.task.TaskList;
 
 public class DaBot {
     private final Storage storage;
@@ -35,7 +36,7 @@ public class DaBot {
                 } else if (description.equals("list")) {
                     ui.showTasks(tasks.asList());
 
-                } else if (description.startsWith("on")) { // Level-8 stretch
+                } else if (description.startsWith("on")) {
                     java.time.LocalDate date = Parser.parseOnDate(description);
                     ui.showTasksOn(date, tasks.tasksOn(date));
 

@@ -1,3 +1,7 @@
+package dabot.io;
+
+import dabot.task.Task;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +61,7 @@ public class Ui {
     }
 
 
-    public void showTasks(List<Task> tasks) {
+    public void showTasks(ArrayList<Task> tasks) {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println((i + 1) + "." + tasks.get(i));

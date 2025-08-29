@@ -1,3 +1,8 @@
+package dabot.io;
+
+import dabot.main.DabotException;
+import dabot.task.Task;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;

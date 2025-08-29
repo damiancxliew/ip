@@ -1,3 +1,5 @@
+package dabot.task;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,7 @@ public class TaskList {
         return tasks.size();
     }
 
-    public List<Task> asList() {
+    public ArrayList<Task> asList() {
         return tasks;
     }
 
