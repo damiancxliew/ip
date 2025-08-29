@@ -104,11 +104,22 @@ public class Parser {
      */
     public static LocalDate parseOnDate(String input) throws DabotException {
         String[] words = input.trim().split("\\s+");
-        if (words.length < 2) throw new DabotException("Date (yyyy-MM-dd) cannot be empty.");
+        if (words.length < 2) {
+            throw new DabotException("Date (yyyy-MM-dd) cannot be empty.");
+        }
         try {
             return LocalDate.parse(words[1]);
         } catch (DateTimeParseException e) {
             throw new DabotException("Please type your date in format yyyy-MM-dd.");
         }
     }
+
+    public static String parseFindKeyword(String input) throws DabotException {
+        String[] words = input.trim().split("\\s+", 2);
+        if (words.length < 2 || words[1].isEmpty()) {
+            throw new DabotException("Find keyword cannot be empty.");
+        }
+        return words[1];
+    }
+
 }

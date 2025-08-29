@@ -7,8 +7,8 @@ import java.util.List;
 /**
  * Represents a list of {@link Task} objects.
  * <p>
- * Provides operations for adding, deleting, retrieving, and updating
- * tasks. Also supports searching for tasks that occur on a specific date.
+ * Provides operations to add, delete, mark, unmark,
+ * search by date, and search by keyword.
  * </p>
  */
 public class TaskList {
@@ -22,27 +22,27 @@ public class TaskList {
     }
 
     /**
-     * Creates a {@code TaskList} initialized with a given set of tasks.
+     * Creates a {@code TaskList} with initial tasks.
      *
-     * @param initial the initial list of tasks
+     * @param initial list of tasks to populate
      */
     public TaskList(List<Task> initial) {
         this.tasks = new ArrayList<>(initial);
     }
 
     /**
-     * Returns the number of tasks currently in the list.
+     * Returns the number of tasks in the list.
      *
-     * @return the number of tasks
+     * @return size of task list
      */
     public int size() {
         return tasks.size();
     }
 
     /**
-     * Returns the internal list of tasks.
+     * Returns the underlying list of tasks.
      *
-     * @return the list of tasks
+     * @return list of tasks
      */
     public ArrayList<Task> asList() {
         return tasks;
@@ -51,15 +51,15 @@ public class TaskList {
     /**
      * Returns the task at a given index.
      *
-     * @param index zero-based index of the task
-     * @return the task at the given index
+     * @param index index of the task
+     * @return task at that index
      */
     public Task get(int index) {
         return tasks.get(index);
     }
 
     /**
-     * Adds a new task to the list.
+     * Adds a task to the list.
      *
      * @param task the task to add
      */
@@ -68,42 +68,38 @@ public class TaskList {
     }
 
     /**
-     * Removes and returns the task at the specified index.
+     * Deletes and returns the task at a given index.
      *
-     * @param index zero-based index of the task
-     * @return the removed task
+     * @param index index of task to delete
+     * @return deleted task
      */
     public Task delete(int index) {
         return tasks.remove(index);
     }
 
     /**
-     * Marks the task at the specified index as done.
+     * Marks the task at a given index as done.
      *
-     * @param index zero-based index of the task
+     * @param index index of task
      */
     public void mark(int index) {
         tasks.get(index).markAsDone();
     }
 
     /**
-     * Marks the task at the specified index as not done.
+     * Marks the task at a given index as not done.
      *
-     * @param index zero-based index of the task
+     * @param index index of task
      */
     public void unmark(int index) {
         tasks.get(index).markAsUndone();
     }
 
     /**
-     * Returns all tasks that occur on a given date.
-     * <p>
-     * For {@link Deadline} tasks, the deadline date must match exactly.
-     * For {@link Event} tasks, either the start or end date must match.
-     * </p>
+     * Returns tasks that occur on the given date.
      *
-     * @param date the date to filter tasks by
-     * @return a list of tasks occurring on the given date
+     * @param date date to filter by
+     * @return list of matching tasks
      */
     public List<Task> tasksOn(LocalDate date) {
         List<Task> output = new ArrayList<>();
@@ -119,6 +115,23 @@ public class TaskList {
                         || (event.endTime != null && event.endTime.equals(date))) {
                     output.add(task);
                 }
+            }
+        }
+        return output;
+    }
+
+    /**
+     * Finds all tasks that contain the given keyword.
+     *
+     * @param keyword keyword to search for
+     * @return list of matching tasks
+     */
+    public ArrayList<Task> find(String keyword) {
+        ArrayList<Task> output = new java.util.ArrayList<>();
+        String keywordLowerCase = keyword.toLowerCase();
+        for (Task t : tasks) {
+            if (t.toString().toLowerCase().contains(keywordLowerCase)) {
+                output.add(t);
             }
         }
         return output;

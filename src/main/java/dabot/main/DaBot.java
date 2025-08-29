@@ -75,7 +75,9 @@ public class DaBot {
                     Task removed = tasks.delete(idx1 - 1);
                     storage.save(tasks.asList());
                     ui.showDelete(removed, tasks.size());
-
+                } else if (description.startsWith("find")) {
+                    String keyword = Parser.parseFindKeyword(description);
+                    ui.showFind(tasks.find(keyword));
                 } else {
                     Task task = Parser.parseTask(description);
                     tasks.add(task);
