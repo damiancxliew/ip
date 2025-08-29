@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 public class Parser {
 
     public static Task parseTask(String input) throws DabotException {
@@ -32,6 +35,30 @@ public class Parser {
 
             default:
                 throw new DabotException("Grrrr, I am sorry, I don't know what that means...");
+        }
+    }
+
+    public static int parseIndex1(String input) throws DabotException {
+        String[] words = input.trim().split("\\s+");
+        if (words.length < 2) {
+            throw new DabotException("Please specify a task number.");
+        }
+        try {
+            int idx1 = Integer.parseInt(words[1]);
+            if (idx1 <= 0) throw new NumberFormatException();
+            return idx1;
+        } catch (NumberFormatException e) {
+            throw new DabotException("Task number must be a positive integer.");
+        }
+    }
+
+    public static LocalDate parseOnDate(String input) throws DabotException {
+        String[] words = input.trim().split("\\s+");
+        if (words.length < 2) throw new DabotException("Date (yyyy-MM-dd) cannot be empty.");
+        try {
+            return LocalDate.parse(words[1]);
+        } catch (DateTimeParseException e) {
+            throw new DabotException("Please type your date in format yyyy-MM-dd.");
         }
     }
 }

@@ -1,132 +1,57 @@
-import java.io.FileReader;
-import java.io.File;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.time.LocalDate;
+import java.util.List;
 
 public class Storage {
-    public static ArrayList<Task> taskList;
-    public static final String FILE_PATH = "data/dabot.txt";
+    private final String filePath;
 
-    public Storage(){
-        taskList = new ArrayList<>(100);
-        loadTasks();
+    public Storage(String filePath) {
+        this.filePath = filePath;
     }
 
-    public void addTask(Task task) {
-        taskList.add(task);
-        System.out.println("Got it. I've added this task:\n\t" + task + "\n");
-        System.out.println("Now you have " + taskList.size() + " tasks in the list.");
-        saveTasks();
-    }
-
-    public void printTasks() {
-        System.out.println("Here are the tasks in your list:\n");
-        for (int i = 1; i < taskList.size() + 1; i++) {
-            System.out.println(i + ". " + taskList.get(i - 1));
-        }
-    }
-
-    public void markTaskAsUndone(String[] words) throws DabotException{
-        if (words.length < 2 || words[1].isEmpty()) { //argument check
-            throw new DabotException("Task number cannot be empty!");
-        }
-        int taskId = Integer.parseInt(words[1]) - 1;
-        if (taskId < 0 || taskId >= taskList.size()) {
-            throw new DabotException("Invalid task number!");
-        }
-        Task task = taskList.get(taskId);
-        task.markAsUndone();
-        System.out.println("OK, I've marked this task as not done yet:\n");
-        System.out.println(task);
-        saveTasks();
-    }
-
-    public void markTaskAsDone(String[] words) throws DabotException{
-        if (words.length < 2 || words[1].isEmpty()) { //argument check
-            throw new DabotException("Task number cannot be empty!");
-        }
-        int taskId = Integer.parseInt(words[1]) - 1;
-        if (taskId < 0 || taskId >= taskList.size()) {
-            throw new DabotException("Invalid task number!");
-        }
-        Task task = taskList.get(taskId);
-        task.markAsDone();
-        System.out.println("Nice! I've marked this task as done:\n");
-        System.out.println(task);
-        saveTasks();
-    }
-
-    public void deleteTask(String[] words) throws DabotException {
-        if (words.length < 2 || words[1].isEmpty()) { //argument check
-            throw new DabotException("Task number cannot be empty!");
-        }
-        int taskId = Integer.parseInt(words[1]) - 1;
-        if (taskId < 0 || taskId >= taskList.size()) {
-            throw new DabotException("Invalid task number!");
-        }
-        Task task = taskList.get(taskId);
-        taskList.remove(task);
-        System.out.println("Noted. I've remove this task:\n\t" + task + "\n");
-        System.out.println("Now you have " + taskList.size() + " tasks in the list.");
-        saveTasks();
-    }
-
-    public void saveTasks() {
+    /** Loads tasks from file. Returns an empty list if file is absent. */
+    public List<Task> load() throws DabotException {
+        List<Task> list = new ArrayList<>();
+        File f = new File(filePath);
         try {
-            File file = new File(FILE_PATH);
-            file.getParentFile().mkdirs();
-            FileWriter fw = new FileWriter(file);
-            for (Task task : taskList) {
-                fw.write(task.encodeString() + '\n');
-            }
-            fw.close();
-        } catch (IOException e) {
-            System.out.println("Error saving tasks: " + e.getMessage());
-        }
-    }
+            File parent = f.getParentFile();
+            if (parent != null) parent.mkdirs();
+            if (!f.exists()) return list;
 
-    public void loadTasks() {
-        try {
-            File file = new File(FILE_PATH);
-            if (!file.exists()) {
-                return;
-            }
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line;
-            while ((line = br.readLine()) != null) {
-                Task task = Task.decodeString(line);
-                taskList.add(task);
-            }
-            br.close();
-        } catch (IOException e) {
-            System.out.println("Error loading tasks: " + e.getMessage());
-        } catch (DabotException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void printTasksOn(String[] words) throws DabotException{
-        if (words.length < 2) {
-            throw new DabotException("Date (YYYY-mm-dd) cannot be empty.");
-        }
-        LocalDate date = LocalDate.parse(words[1]);
-        System.out.println("Here are the tasks on " + date.toString());
-        for (Task task : taskList) {
-            if (task instanceof Deadline) {
-                if (((Deadline) task).byDate != null && ((Deadline) task).byDate.equals(date)) {
-                    System.out.println(task);
-                }
-            } else if (task instanceof Event) {
-                if (((Event) task).startTime != null && ((Event) task).endTime != null) {
-                    if (((Event) task).startTime.equals(date) || ((Event) task).endTime.equals(date)) {
-                        System.out.println(task);
+            try (BufferedReader br = new BufferedReader(new FileReader(f))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    try {
+                        list.add(Task.decodeString(line));
+                    } catch (DabotException e) {
+                        System.out.println("Skipping bad task line: " + e.getMessage());
                     }
                 }
             }
+            return list;
+        } catch (IOException e) {
+            throw new DabotException("Failed to load tasks: " + e.getMessage());
         }
     }
 
+    /** Saves all tasks into file, one per line. */
+    public void save(List<Task> tasks) throws DabotException {
+        File f = new File(filePath);
+        try {
+            File parent = f.getParentFile();
+            if (parent != null) parent.mkdirs();
+            try (FileWriter fw = new FileWriter(f)) {
+                for (Task t : tasks) {
+                    fw.write(t.encodeString());
+                    fw.write(System.lineSeparator());
+                }
+            }
+        } catch (IOException e) {
+            throw new DabotException("Failed to save tasks: " + e.getMessage());
+        }
+    }
 }
