@@ -12,4 +12,14 @@ public class Event extends Task{
     public String toString() {
         return "[E]" + super.toString() + " (from: " + startTime + " to: " + endTime + ")";
     }
+
+    @Override
+    public String getType() {
+        return "E";
+    }
+
+    @Override
+    public String encodeString() {
+        return String.format("%s | %d | %s | %s | %s", getType(), isDone ? 1 : 0, description, startTime, endTime);
+    }
 }
