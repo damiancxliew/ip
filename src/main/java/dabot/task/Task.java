@@ -2,23 +2,39 @@ package dabot.task;
 
 import dabot.main.DabotException;
 
+/**
+ * Base class for all tasks (Todo, Deadline, Event).
+ * Stores a description and completion status.
+ */
 public abstract class Task {
     protected String description;
     protected boolean isDone;
 
+    /**
+     * Creates a new task with the given description.
+     *
+     * @param description task description
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
 
+    /**
+     * Returns "X" if done, else a space.
+     *
+     * @return status icon
+     */
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        return (isDone ? "X" : " ");
     }
 
+    /** Marks this task as done. */
     public void markAsDone() {
         isDone = true;
     }
 
+    /** Marks this task as not done. */
     public void markAsUndone() {
         isDone = false;
     }
@@ -28,8 +44,18 @@ public abstract class Task {
         return "[" + this.getStatusIcon() + "] " + this.description;
     }
 
+    /**
+     * Returns the task type code ("T", "D", "E").
+     *
+     * @return task type string
+     */
     public abstract String getType();
 
+    /**
+     * Encodes this task for storage.
+     *
+     * @return encoded string form
+     */
     public String encodeString() {
         return String.format("%s | %d | %s",
                 this.getType(),
@@ -37,6 +63,13 @@ public abstract class Task {
                 this.description);
     }
 
+    /**
+     * Decodes a line from storage into a Task.
+     *
+     * @param line encoded string
+     * @return decoded Task
+     * @throws DabotException if the line format is invalid
+     */
     public static Task decodeString(String line) throws DabotException {
         if (line == null || line.trim().isEmpty()) {
             throw new DabotException("Invalid task line!");
