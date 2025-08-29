@@ -1,4 +1,4 @@
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -23,5 +23,42 @@ public class Task {
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.description;
     }
+
+    public abstract String getType();
+
+    public String encodeString() {
+        return String.format("%s | %d | %s",
+                this.getType(),
+                this.isDone ? 1 : 0,
+                this.description);
+    }
+
+    public static Task decodeString(String line) throws DabotException {
+        String[] parts = line.split(" \\| ");
+        String type = parts[0];
+        boolean isDone = parts[1].equals("1");
+        String desc = parts[2];
+
+        Task task;
+        switch (type) {
+        case "T":
+            task = new Todo(desc);
+            break;
+        case "D":
+            task = new Deadline(desc, parts[3]);
+            break;
+        case "E":
+            task = new Event(desc, parts[3], parts[4]);
+            break;
+        default:
+            throw new DabotException("Unknown task type: " + type);
+        }
+        if (isDone) {
+            task.markAsDone();
+        }
+
+        return task;
+    }
+
 
 }

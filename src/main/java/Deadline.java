@@ -10,4 +10,14 @@ public class Deadline extends Task{
     public String toString() {
         return "[D]" + super.toString() + " (by: " + by + ")";
     }
+
+    @Override
+    public String getType() {
+        return "D";
+    }
+
+    @Override
+    public String encodeString() {
+        return String.format("%s | %d | %s | %s", getType(), isDone ? 1 : 0, description, by);
+    }
 }
