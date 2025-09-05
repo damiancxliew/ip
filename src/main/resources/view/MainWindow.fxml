@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="dabot.gui.MainWindow">
+
+    <center>
+        <TextArea fx:id="dialogArea" prefRowCount="20" wrapText="true"/>
+    </center>
+
+    <bottom>
+        <HBox spacing="8">
+            <padding>
+                <Insets topRightBottomLeft="10.0"/>
+            </padding>
+            <TextField fx:id="userInput" HBox.hgrow="ALWAYS" onAction="#handleUserInput"/>
+            <Button fx:id="sendButton" text="Send" onAction="#handleUserInput"/>
+        </HBox>
+    </bottom>
+
+    <padding>
+        <Insets topRightBottomLeft="10.0"/>
+    </padding>
+</BorderPane>
