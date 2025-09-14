@@ -80,6 +80,7 @@ public class Parser {
      */
     public static int parseIndex1(String input) throws DabotException {
         String[] words = input.trim().split("\\s+");
+        assert words.length >= 2 : "parseIndex1 assumes input contains at least two tokens";
         if (words.length < 2) {
             throw new DabotException("Please specify a task number.");
         }
