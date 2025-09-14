@@ -139,4 +139,37 @@ public class TaskList {
         }
         return output;
     }
+
+    /**
+     * Returns tasks that are NOT done and due/starting within the next {@code days} (inclusive).
+     * Only considers tasks with parseable dates (Deadline.byDate, Event.startTime).
+     *
+     * @param days number of days from today to check
+     * @return list of upcoming undone tasks
+     */
+    public ArrayList<Task> remindersWithinDays(int days) {
+        ArrayList<Task> out = new ArrayList<>();
+        java.time.LocalDate today = java.time.LocalDate.now();
+        java.time.LocalDate end = today.plusDays(days);
+
+        for (Task t : tasks) {
+            if (t.isDone) {
+                continue; // only remind for undone tasks
+            }
+            if (t instanceof Deadline) {
+                Deadline d = (Deadline) t;
+                if (d.byDate != null && !d.byDate.isBefore(today) && !d.byDate.isAfter(end)) {
+                    out.add(t);
+                }
+            } else if (t instanceof Event) {
+                Event e = (Event) t;
+                if (e.startTime != null && !e.startTime.isBefore(today) && !e.startTime.isAfter(end)) {
+                    out.add(t);
+                }
+            }
+        }
+        return out;
+    }
+
+
 }

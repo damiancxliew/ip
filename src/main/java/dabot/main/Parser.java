@@ -123,4 +123,23 @@ public class Parser {
         return words[1];
     }
 
+    /**
+     * Parse an optional integer number of days after the keyword (default 3).
+     */
+    public static int parseRemindDays(String input) throws DabotException {
+        String[] words = input.trim().split("\\s+");
+        if (words.length == 1) {
+            return 3; // default days
+        }
+        try {
+            int d = Integer.parseInt(words[1]);
+            if (d <= 0) {
+                throw new NumberFormatException();
+            }
+            return d;
+        } catch (NumberFormatException e) {
+            throw new DabotException("Please provide a positive number of days, e.g., 'remind 7'.");
+        }
+    }
+
 }
