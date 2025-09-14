@@ -70,6 +70,8 @@ public class MainApp extends Application {
                 return handleUnmark(trimmed);
             case "delete":
                 return handleDelete(trimmed);
+            case "remind":
+                return handleRemind(trimmed);
             default:
                 return handleAdd(trimmed);
             }
@@ -134,6 +136,7 @@ public class MainApp extends Application {
     }
 
     private void save() throws DabotException {
+        assert tasks != null : "TaskList must be initialized before saving";
         storage.save(tasks.asList());
     }
 
@@ -144,4 +147,21 @@ public class MainApp extends Application {
         }
         return sb.toString().trim();
     }
+
+    private String handleRemind(String input) throws DabotException {
+        int days = Parser.parseRemindDays(input); // e.g., "remind 7" -> 7
+        var upcoming = tasks.remindersWithinDays(days);
+
+        if (upcoming.isEmpty()) {
+            return "No upcoming tasks in the next " + days + " days.";
+        }
+
+        StringBuilder sb = new StringBuilder("Here are the upcoming tasks in the next ")
+                .append(days).append(" days:").append('\n');
+        for (int i = 0; i < upcoming.size(); i++) {
+            sb.append(i + 1).append(". ").append(upcoming.get(i)).append('\n');
+        }
+        return sb.toString().trim();
+    }
+
 }
