@@ -136,6 +136,7 @@ public class MainApp extends Application {
     }
 
     private void save() throws DabotException {
+        assert tasks != null : "TaskList must be initialized before saving";
         storage.save(tasks.asList());
     }
 
