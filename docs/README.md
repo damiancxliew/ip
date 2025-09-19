@@ -85,7 +85,7 @@ Here are the tasks in your list:
 
 ---
 
-## Marking tasks
+## Marking or Unmarking tasks
 
 Use `mark` or `unmark` followed by the task number to update completion.
 
