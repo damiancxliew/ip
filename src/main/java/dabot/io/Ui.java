@@ -1,12 +1,11 @@
 package dabot.io;
 
-import dabot.task.Task;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import dabot.task.Task;
 /**
  * Handles all user interactions with the chatbot.
  * <p>
@@ -135,6 +134,11 @@ public class Ui {
         }
     }
 
+    /**
+     * Displays the list of tasks that match a search keyword.
+     *
+     * @param matches the list of tasks that matched the search
+     */
     public void showFind(ArrayList<Task> matches) {
         System.out.println("Here are the matching tasks in your list:");
         for (int i = 0; i < matches.size(); i++) {

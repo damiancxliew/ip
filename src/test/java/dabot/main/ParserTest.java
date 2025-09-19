@@ -1,17 +1,17 @@
 package dabot.main;
 
-import dabot.task.Task;
-import dabot.task.Todo;
-import dabot.task.Deadline;
-import dabot.task.Event;
-import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.LocalDate;
+
+import org.junit.jupiter.api.Test;
+
+import dabot.task.Deadline;
+import dabot.task.Event;
+import dabot.task.Task;
+import dabot.task.Todo;
 
 public class ParserTest {
 

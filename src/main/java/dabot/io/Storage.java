@@ -1,8 +1,5 @@
 package dabot.io;
 
-import dabot.main.DabotException;
-import dabot.task.Task;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -11,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dabot.main.DabotException;
+import dabot.task.Task;
 /**
  * Handles saving and loading of {@link Task} objects to and from the disk.
  * <p>
@@ -48,8 +47,13 @@ public class Storage {
         File f = new File(filePath);
         try {
             File parent = f.getParentFile();
-            if (parent != null) parent.mkdirs();
-            if (!f.exists()) return list;
+            if (parent != null) {
+                parent.mkdirs();
+            }
+
+            if (!f.exists()) {
+                return list;
+            }
 
             try (BufferedReader br = new BufferedReader(new FileReader(f))) {
                 String line;
@@ -81,7 +85,9 @@ public class Storage {
         File f = new File(filePath);
         try {
             File parent = f.getParentFile();
-            if (parent != null) parent.mkdirs();
+            if (parent != null) {
+                parent.mkdirs();
+            }
             try (FileWriter fw = new FileWriter(f)) {
                 for (Task t : tasks) {
                     fw.write(t.encodeString());

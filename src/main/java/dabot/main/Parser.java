@@ -1,12 +1,13 @@
 package dabot.main;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 import dabot.task.Deadline;
 import dabot.task.Event;
 import dabot.task.Task;
 import dabot.task.Todo;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 /**
  * Utility class that parses user input strings into actionable commands
@@ -50,7 +51,7 @@ public class Parser {
             if (args.isEmpty()) {
                 throw new DabotException("Error! Usage: deadline DESCRIPTION /by DATE");
             }
-            String[] parts = args.split("/by", 2);   // limit=2 prevents over-splitting
+            String[] parts = args.split("/by", 2); // limit=2 prevents over-splitting
             if (parts.length < 2 || parts[0].isBlank() || parts[1].isBlank()) {
                 throw new DabotException("Error! Usage: deadline DESCRIPTION /by DATE");
             }
@@ -96,7 +97,9 @@ public class Parser {
         }
         try {
             int idx1 = Integer.parseInt(words[1]);
-            if (idx1 <= 0) throw new NumberFormatException();
+            if (idx1 <= 0) {
+                throw new NumberFormatException();
+            }
             return idx1;
         } catch (NumberFormatException e) {
             throw new DabotException("Task number must be a positive integer.");
@@ -125,6 +128,16 @@ public class Parser {
         }
     }
 
+    /**
+     * Extracts the search keyword from a {@code find} command.
+     * <p>
+     * The expected format is {@code find KEYWORD}. If no keyword is provided,
+     * a {@link DabotException} is thrown.
+     *
+     * @param input the full user input string starting with {@code find}
+     * @return the extracted keyword after the command word
+     * @throws DabotException if the keyword is missing or empty
+     */
     public static String parseFindKeyword(String input) throws DabotException {
         String[] words = input.trim().split("\\s+", 2);
         if (words.length < 2 || words[1].isEmpty()) {

@@ -1,5 +1,7 @@
 package dabot.gui;
 
+import java.util.Objects;
+
 import dabot.io.Storage;
 import dabot.main.DabotException;
 import dabot.main.Parser;
@@ -9,8 +11,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.util.Objects;
 
 /**
  * The main JavaFX application class for DaBot.

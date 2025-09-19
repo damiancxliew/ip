@@ -4,10 +4,10 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -81,7 +81,11 @@ public class MainWindow {
         if (isBubbleMode()) {
             addBubble(input, true, false);
             addBubble(reply, false, isError);
-            Platform.runLater(() -> { if (scrollPane != null) scrollPane.setVvalue(1.0); });
+            Platform.runLater(() -> {
+                if (scrollPane != null) {
+                    scrollPane.setVvalue(1.0);
+                }
+            });
         } else if (dialogArea != null) {
             dialogArea.appendText("\nYou: " + input + "\n");
             dialogArea.appendText("DaBot: " + reply + "\n");
@@ -106,7 +110,7 @@ public class MainWindow {
     private void addBubble(String text, boolean isUser, boolean isError) {
         Label msg = new Label(text);
         msg.setWrapText(true);
-        msg.setMinHeight(Region.USE_PREF_SIZE);  // prevents vertical clipping on wrapped labels
+        msg.setMinHeight(Region.USE_PREF_SIZE); // prevents vertical clipping on wrapped labels
         HBox.setHgrow(msg, Priority.ALWAYS);
 
         // keep some horizontal margin so lines break nicely
@@ -118,7 +122,9 @@ public class MainWindow {
 
         // simple styling samples; adjust your CSS as needed
         msg.getStyleClass().add(isUser ? "bubble-user" : "bubble-bot");
-        if (isError) msg.getStyleClass().add("bubble-error");
+        if (isError) {
+            msg.getStyleClass().add("bubble-error");
+        }
 
         HBox bubble = new HBox(msg);
         bubble.setFillHeight(true);
@@ -129,13 +135,17 @@ public class MainWindow {
 
         // ensure we scroll after layout pass
         Platform.runLater(() -> {
-            if (scrollPane != null) scrollPane.setVvalue(1.0);
+            if (scrollPane != null) {
+                scrollPane.setVvalue(1.0);
+            }
         });
     }
 
 
     private boolean looksLikeError(String reply) {
-        if (reply == null) return false;
+        if (reply == null) {
+            return false;
+        }
         String r = reply.trim();
         // simple heuristics to highlight validation errors
         return r.startsWith("Please ")

@@ -1,11 +1,12 @@
 package dabot.main;
 
+import java.time.LocalDate;
+
 import dabot.io.Storage;
 import dabot.io.Ui;
 import dabot.task.Task;
 import dabot.task.TaskList;
 
-import java.time.LocalDate;
 
 /**
  * Console (CLI) entry point for DaBot using a small handler-style command router.
@@ -16,6 +17,15 @@ public class DaBot {
     private final Ui ui;
     private TaskList tasks;
 
+    /**
+     * Constructs a new {@code DaBot} instance with persistent storage.
+     * <p>
+     * Attempts to load tasks from the specified file. If loading fails,
+     * the task list is initialized as empty and an error message will be shown
+     * during the first interaction loop.
+     *
+     * @param filePath the path to the file used for loading and saving tasks
+     */
     public DaBot(String filePath) {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
@@ -85,16 +95,22 @@ public class DaBot {
     }
 
     private String handleList() {
-        if (tasks.size() == 0) return "Your list is empty.";
+        if (tasks.size() == 0) {
+            return "Your list is empty.";
+        }
         return "Here are the tasks in your list:\n" + renderTaskList();
     }
 
     private String handleOn(String input) throws DabotException {
         LocalDate date = Parser.parseOnDate(input);
         var dayTasks = tasks.tasksOn(date);
-        if (dayTasks.isEmpty()) return "No tasks on " + date + ".";
+        if (dayTasks.isEmpty()) {
+            return "No tasks on " + date + ".";
+        }
         StringBuilder sb = new StringBuilder("Here are the tasks on ").append(date).append(":\n");
-        for (Task t : dayTasks) sb.append(t).append('\n');
+        for (Task t : dayTasks) {
+            sb.append(t).append('\n');
+        }
         return sb.toString().trim();
     }
 
@@ -123,7 +139,9 @@ public class DaBot {
     private String handleFind(String input) throws DabotException {
         String keyword = Parser.parseFindKeyword(input);
         var found = tasks.find(keyword);
-        if (found.isEmpty()) return "No matching tasks for: " + keyword;
+        if (found.isEmpty()) {
+            return "No matching tasks for: " + keyword;
+        }
         StringBuilder sb = new StringBuilder("Here are the matching tasks:\n");
         for (int i = 0; i < found.size(); i++) {
             sb.append(i + 1).append(". ").append(found.get(i)).append('\n');
@@ -142,7 +160,9 @@ public class DaBot {
     private String handleRemind(String input) throws DabotException {
         int days = Parser.parseRemindDays(input); // e.g. "remind 7"
         var upcoming = tasks.remindersWithinDays(days);
-        if (upcoming.isEmpty()) return "No upcoming tasks in the next " + days + " days.";
+        if (upcoming.isEmpty()) {
+            return "No upcoming tasks in the next " + days + " days.";
+        }
         StringBuilder sb = new StringBuilder("Here are the upcoming tasks in the next ")
                 .append(days).append(" days:\n");
         for (int i = 0; i < upcoming.size(); i++) {
