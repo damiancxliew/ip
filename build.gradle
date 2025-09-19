@@ -73,6 +73,10 @@ jar {
 shadowJar {
     archiveBaseName = "dabot"
     archiveClassifier = null
+    mergeServiceFiles()
+    manifest {
+        attributes 'Main-Class': 'dabot.gui.Launcher'
+    }
 }
 
 run{
