@@ -10,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 /**
  * The main JavaFX application class for DaBot.
  * <p>
@@ -31,6 +33,7 @@ public class MainApp extends Application {
 
         FXMLLoader fxml = new FXMLLoader(getClass().getResource("/view/MainWindow.fxml"));
         Scene scene = new Scene(fxml.load());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/view/style.css")).toExternalForm());
         MainWindow controller = fxml.getController();
         controller.init(this);
 

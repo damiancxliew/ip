@@ -1,5 +1,7 @@
 package dabot.task;
 
+import dabot.main.DabotException;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +87,10 @@ public class TaskList {
      *
      * @param index index of task
      */
-    public void mark(int index) {
+    public void mark(int index) throws DabotException{
+        if (index < 0 || index >= tasks.size()) {
+            throw new DabotException("Task number " + (index + 1) + " is out of range.");
+        }
         tasks.get(index).markAsDone();
     }
 
@@ -94,7 +99,10 @@ public class TaskList {
      *
      * @param index index of task
      */
-    public void unmark(int index) {
+    public void unmark(int index) throws DabotException{
+        if (index < 0 || index >= tasks.size()) {
+            throw new DabotException("Task number " + (index + 1) + " is out of range.");
+        }
         tasks.get(index).markAsUndone();
     }
 

@@ -2,7 +2,9 @@ D | 1 | submit report | Sunday
 E | 0 | project meeting | 2pm | 4pm
 D | 0 | Submit CS2105 Assignment | 2025-09-03
 E | 0 | project meeting | 30th Aug 4pm | 5pm
-E | 0 | project nono | 31th Aug 12pm | 3pm
+E | 1 | project nono | 31th Aug 12pm | 3pm
 D | 0 | Submit CS2109S assignment | 2025-09-14
 T | 0 | read book
 D | 0 | return book | 2025-09-11
+D | 0 | read book | 19/9/2025
+D | 0 | read book | 2025-09-19

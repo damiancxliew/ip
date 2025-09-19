@@ -1,30 +1,198 @@
-# Duke User Guide
+# DaBot User Guide
 
-// Update the title above to match the actual product name
+![Screenshot](./images/dabot.png)
 
-// Product screenshot goes here
+---
 
-// Product intro goes here
+## Introduction
+
+DaBot is a simple, personal chatbot built in Java with JavaFX.
+It helps users manage their tasks with deadlines, events, and reminders through a clean GUI.
+
+You can add tasks, mark them as done, search for them by date/keyword, and even get reminders for upcoming tasks.
+
+---
 
 ## Adding deadlines
 
-// Describe the action and its outcome.
+Use the `deadline` command to add a task with a deadline.
 
-// Give examples of usage
-
-Example: `keyword (optional arguments)`
-
-// A description of the expected outcome goes here
+**Format:**
 
 ```
-expected output
+deadline TASK_DESCRIPTION /by YYYY-MM-DD
 ```
 
-## Feature ABC
+**Example:**
 
-// Feature details
+```
+deadline return book /by 2025-09-21
+```
 
+**Expected output:**
 
-## Feature XYZ
+```
+Got it. I've added this task:
+    [D][ ] return book (by: 2025-09-21)
+Now you have 1 tasks in the list.
+```
 
-// Feature details
+---
+
+## Adding events
+
+Use the `event` command to add an event with a start and end date.
+
+**Format:**
+
+```
+event TASK_DESCRIPTION /from YYYY-MM-DD /to YYYY-MM-DD
+```
+
+**Example:**
+
+```
+event project meeting /from 2025-09-22 /to 2025-09-22
+```
+
+**Expected output:**
+
+```
+Got it. I've added this task:
+    [E][ ] project meeting (from: 2025-09-22 to: 2025-09-22)
+Now you have 2 tasks in the list.
+```
+
+---
+
+## Listing tasks
+
+Use the `list` command to display all your tasks.
+
+**Example:**
+
+```
+list
+```
+
+**Expected output:**
+
+```
+Here are the tasks in your list:
+1. [D][ ] return book (by: 2025-09-21)
+2. [E][ ] project meeting (from: 2025-09-22 to: 2025-09-22)
+```
+
+---
+
+## Marking tasks
+
+Use `mark` or `unmark` followed by the task number to update completion.
+
+**Example:**
+
+```
+mark 1
+```
+
+**Expected output:**
+
+```
+Nice! I've marked this task as done:
+[D][X] return book (by: 2025-09-21)
+```
+
+---
+
+## Deleting tasks
+
+Use the `delete` command followed by the task number.
+
+**Example:**
+
+```
+delete 2
+```
+
+**Expected output:**
+
+```
+Noted. I've removed this task:
+[E][ ] project meeting (from: 2025-09-22 to: 2025-09-22)
+Now you have 1 tasks in the list.
+```
+
+---
+
+## Searching by date
+
+Use the `on` command with a date to see all tasks for that date.
+
+**Example:**
+
+```
+on 2025-09-21
+```
+
+**Expected output:**
+
+```
+Here are the tasks on 2025-09-21:
+[D][ ] return book (by: 2025-09-21)
+```
+
+---
+
+## Searching by keyword
+
+Use the `find` command with a keyword to search tasks.
+
+**Example:**
+
+```
+find book
+```
+
+**Expected output:**
+
+```
+Here are the matching tasks in your list:
+1. [D][ ] return book (by: 2025-09-21)
+```
+
+---
+
+## Getting reminders
+
+Use the `remind` command with the number of days to see upcoming tasks.
+
+**Example:**
+
+```
+remind 7
+```
+
+**Expected output:**
+
+```
+Here are your upcoming tasks within 7 days:
+[D][ ] return book (by: 2025-09-21)
+```
+
+---
+
+## Exiting the app
+
+Use the `bye` command to exit.
+
+**Example:**
+
+```
+bye
+```
+
+**Expected output:**
+
+```
+Bye. Hope to see you again soon!
+```

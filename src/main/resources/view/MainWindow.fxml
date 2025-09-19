@@ -4,18 +4,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="dabot.gui.MainWindow">
 
     <center>
-        <TextArea fx:id="dialogArea" prefRowCount="20" wrapText="true"/>
+        <ScrollPane fx:id="scrollPane" fitToWidth="true" prefHeight="480" prefWidth="340" hbarPolicy="NEVER">
+            <content>
+                <VBox fx:id="dialogContainer" spacing="6" styleClass="dialog-container"/>
+            </content>
+        </ScrollPane>
     </center>
 
     <bottom>
         <HBox spacing="8">
             <padding>
-                <Insets topRightBottomLeft="10.0"/>
+                <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
             </padding>
             <TextField fx:id="userInput" HBox.hgrow="ALWAYS" onAction="#handleUserInput"/>
             <Button fx:id="sendButton" text="Send" onAction="#handleUserInput"/>
@@ -23,6 +27,6 @@
     </bottom>
 
     <padding>
-        <Insets topRightBottomLeft="10.0"/>
+        <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
     </padding>
 </BorderPane>

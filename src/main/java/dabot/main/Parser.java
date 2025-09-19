@@ -36,32 +36,43 @@ public class Parser {
     public static Task parseTask(String input) throws DabotException {
         String[] words = input.split(" ", 2);
         String taskType = words[0];
+        String args = (words.length > 1) ? words[1].trim() : "";
 
         switch (taskType) { // Switch between different task types
-        case "todo":
-            if (words.length < 2 || words[1].isEmpty()) {
-                throw new DabotException("The description of a todo cannot be empty.");
+        case "todo": {
+            if (args.isEmpty()) {
+                throw new DabotException("Error! Usage: todo DESCRIPTION");
             }
-            return new Todo(words[1].trim());
+            return new Todo(args);
+        }
 
-        case "deadline":
-            String[] parts = words[1].split("/by");
-            if (parts.length < 2) {
-                throw new DabotException("Deadline must have a /by clause. Add a date!");
+        case "deadline": {
+            if (args.isEmpty()) {
+                throw new DabotException("Error! Usage: deadline DESCRIPTION /by DATE");
+            }
+            String[] parts = args.split("/by", 2);   // limit=2 prevents over-splitting
+            if (parts.length < 2 || parts[0].isBlank() || parts[1].isBlank()) {
+                throw new DabotException("Error! Usage: deadline DESCRIPTION /by DATE");
             }
             return new Deadline(parts[0].trim(), parts[1].trim());
+        }
 
-        case "event":
-            String[] timeParts = words[1].split("/from");
-            if (timeParts.length < 2) {
-                throw new DabotException("Event must have a /from and /to clause. Add a proper start and end time!");
+        case "event": {
+            if (args.isEmpty()) {
+                throw new DabotException("Error! Usage: event DESCRIPTION /from START /to END");
             }
-            String description = timeParts[0].trim();
-            String[] fromTo = timeParts[1].split("/to", 2);
-            if (fromTo.length < 2) {
-                throw new DabotException("Event must have a /to clause. Add a proper end time!");
+            String[] descFrom = args.split("/from", 2);
+            if (descFrom.length < 2 || descFrom[0].isBlank()) {
+                throw new DabotException("Error! Usage: event DESCRIPTION /from START /to END");
+            }
+            String description = descFrom[0].trim();
+
+            String[] fromTo = descFrom[1].split("/to", 2);
+            if (fromTo.length < 2 || fromTo[0].isBlank() || fromTo[1].isBlank()) {
+                throw new DabotException("Error! Usage: event DESCRIPTION /from START /to END");
             }
             return new Event(description, fromTo[0].trim(), fromTo[1].trim());
+        }
 
         default:
             throw new DabotException("Grrrr, I am sorry, I don't know what that means...");
