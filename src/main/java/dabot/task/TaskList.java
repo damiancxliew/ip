@@ -79,7 +79,10 @@ public class TaskList {
      * @param index index of task to delete
      * @return deleted task
      */
-    public Task delete(int index) {
+    public Task delete(int index) throws DabotException {
+        if (index < 0 || index >= tasks.size()) {
+            throw new DabotException("Task number " + (index + 1) + " is out of range.");
+        }
         return tasks.remove(index);
     }
 
