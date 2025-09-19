@@ -1,6 +1,6 @@
 # DaBot User Guide
 
-![Screenshot](./images/dabot.png)
+![Screenshot](Ui.png)
 
 ---
 
