@@ -13,6 +13,8 @@ public class Launcher {
      * @param args command-line arguments passed to the application
      */
     public static void main(String[] args) {
+        System.setProperty("prism.order", "sw");
+
         Application.launch(MainApp.class, args);
     }
 }
