@@ -24,3 +24,14 @@ Prerequisites: JDK 17, update Intellij to the most recent version.
    ```
 
 **Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+
+# AI Assistance Acknowledgement
+
+Parts of this project were developed with assistance from AI tools (e.g., ChatGPT/Copilot).  
+Specifically, AI was used for:
+- Documentation proofreading and polishing
+- Code debugging guidance
+- Suggesting alternative implementations
+- Generating and refining some test cases
+
+All design and implementation decisions were made by me, and AI-generated content was reviewed and adapted to ensure understanding and correctness.

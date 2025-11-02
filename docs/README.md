@@ -196,3 +196,14 @@ bye
 ```
 Bye. Hope to see you again soon!
 ```
+
+# AI Assistance Acknowledgement
+
+Parts of this project were developed with assistance from AI tools (e.g., ChatGPT/Copilot).  
+Specifically, AI was used for:
+- Documentation proofreading and polishing
+- Code debugging guidance
+- Suggesting alternative implementations
+- Generating and refining some test cases
+
+All design and implementation decisions were made by me, and AI-generated content was reviewed and adapted to ensure understanding and correctness.
