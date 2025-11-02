@@ -1,0 +1,90 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'checkstyle'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+checkstyle {
+    toolVersion = '10.17.0'
+    configFile = file('config/checkstyle/checkstyle.xml')
+    // Set this to true once you want the build to fail on violations:
+    ignoreFailures = true
+}
+
+
+tasks.named('check') {
+    dependsOn 'checkstyleMain', 'checkstyleTest'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+
+    def fx = '17.0.7'
+    // include platform-specific JavaFX artifacts so the single JAR runs anywhere
+    implementation "org.openjfx:javafx-base:${fx}:win"
+    implementation "org.openjfx:javafx-base:${fx}:mac"
+    implementation "org.openjfx:javafx-base:${fx}:linux"
+    implementation "org.openjfx:javafx-controls:${fx}:win"
+    implementation "org.openjfx:javafx-controls:${fx}:mac"
+    implementation "org.openjfx:javafx-controls:${fx}:linux"
+    implementation "org.openjfx:javafx-fxml:${fx}:win"
+    implementation "org.openjfx:javafx-fxml:${fx}:mac"
+    implementation "org.openjfx:javafx-fxml:${fx}:linux"
+    implementation "org.openjfx:javafx-graphics:${fx}:win"
+    implementation "org.openjfx:javafx-graphics:${fx}:mac"
+    implementation "org.openjfx:javafx-graphics:${fx}:linux"
+}
+
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+
+        showExceptions true
+        exceptionFormat "full"
+        showCauses true
+        showStackTraces true
+        showStandardStreams = false
+    }
+}
+
+application {
+    mainClass.set("dabot.gui.Launcher")
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'dabot.gui.Launcher'
+    }
+}
+
+shadowJar {
+    archiveBaseName = "dabot"
+    archiveClassifier = null
+    mergeServiceFiles()
+    manifest {
+        attributes 'Main-Class': 'dabot.gui.Launcher'
+    }
+}
+
+run{
+    standardInput = System.in
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 17
+}
